@@ -1,25 +1,32 @@
-FROM python:3.11-slim
+# Stage 1: Install dependencies and build the app
+FROM node:20-alpine AS builder
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+# Set working directory
+WORKDIR /app
+
+# Install dependencies first
+COPY package.json package-lock.json* ./
+RUN npm install --legacy-peer-deps
+
+# Copy all source files
+COPY . .
+
+# Build the Next.js app
+RUN npm run build
+
+# Stage 2: Run the app in production mode
+FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# System deps
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential curl && rm -rf /var/lib/apt/lists/*
+# Copy only necessary files from builder
+COPY --from=builder /app/package.json /app/package-lock.json* ./
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/node_modules ./node_modules
 
-COPY requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
+# Expose port for Next.js
+EXPOSE 3000
 
-COPY app /app/app
-COPY alembic.ini /app/alembic.ini
-COPY alembic /app/alembic
-
-ENV APP_DATABASE_URL="sqlite:////data/app.db"
-VOLUME ["/data"]
-
-EXPOSE 8000
-
-CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
-
+# Start Next.js in production mode
+CMD ["npm", "run", "preview"]
