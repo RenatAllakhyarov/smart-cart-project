@@ -1,0 +1,525 @@
+:root {
+  --color-bg: #fdfdfb;
+  --color-bg-secondary: #f8f8f6;
+  --color-surface: #ffffff;
+  --color-border: #e2e2e2;
+
+  --color-text: #2a2a2a;
+  --color-text-muted: #6b6b6b;
+
+  --color-primary: #72a6dd;
+  --color-primary-hover: #5a9ade;
+  --color-primary-active: #5a9ade;
+
+  --color-secondary: #eeb45d;
+  --color-secondary-hover: #f1a242;
+  --color-secondary-active: #f1a242;
+
+  --color-success: #4caf50;
+  --color-danger: #f44336;
+  --color-danger-hover: #e53935;
+  --color-danger-active: #c62828;
+  --color-warning: #ff9800;
+  --color-info: #2196f3;
+
+  --background-hide: rgba(0, 0, 0, 0.6);
+
+  --widget-box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  --card-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: linear-gradient(135deg,
+      var(--color-bg),
+      var(--color-surface));
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-button-root {
+  background: var(--color-primary);
+  border: none;
+  border-radius: 0.75rem;
+  transition: background 0.2s ease;
+  padding: 0.5rem 0.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.app-button-root.loading {
+  pointer-events: none;
+  filter: brightness(0.5);
+}
+
+.app-button-root:hover,
+.app-button-root:focus {
+  background: var(--color-primary-hover);
+  cursor: pointer;
+}
+
+.app-button-root:active {
+  background: var(--color-primary-active);
+}
+
+.app-button-root.disabled {
+  cursor: not-allowed;
+  filter: brightness(0.7);
+}
+
+.app-button-loading-icon {
+  animation: spin 3s infinite;
+}
+
+.app-input-root {
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--color-surface);
+  transition: border-color 0.2s ease;
+}
+
+.app-password-root {
+  position: relative;
+}
+
+.app-password-root .app-input-root {
+  width: 100%;
+}
+
+.app-password-root .p-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0.5rem;
+
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+}
+
+.app-password-hidden {
+  display: none !important;
+}
+
+.app-message-root {
+    max-width: 400px;
+    min-width: 280px;
+    z-index: 1000;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+    border-radius: 1rem;
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: 600;
+    font-size: 1.1rem;
+    gap: 0.75rem;
+    pointer-events: auto;
+
+    opacity: 0;
+    transform: translateY(-20px);
+    animation: fadeInUp 0.4s forwards;
+}
+
+.app-message-root.success {
+    background-color: var(--color-success);
+    color: var(--color-bg);
+}
+
+.app-message-root.info {
+    background-color: var(--color-info);
+    color: var(--color-bg);
+}
+
+.app-message-root.warn {
+    background-color: var(--color-warning);
+    color: var(--color-bg);
+}
+
+.app-message-root.error {
+    background-color: var(--color-danger);
+    color: var(--color-bg);
+}
+
+.app-message-icon {
+    font-size: 1.5rem;
+}
+
+.app-dropdown-root {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  background-color: var(--color-surface);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+.app-dropdown-root:hover,
+.app-dropdown-root:focus-within {
+  border-color: var(--color-primary);
+}
+
+.app-dropdown-input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  color: var(--color-text);
+  font-size: 1rem;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+.app-dropdown-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+}
+
+.app-dropdown-trigger:hover {
+  color: var(--color-primary);
+}
+
+.app-dropdown-panel {
+  margin-top: 0.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  background-color: var(--color-surface);
+  box-shadow: var(--card-box-shadow);
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.app-dropdown-items-wrapper {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.app-dropdown-item {
+  padding: 0.5rem 0.75rem;
+  color: var(--color-text);
+  transition: background-color 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+}
+
+.app-dropdown-item:hover {
+  background-color: var(--color-bg-secondary);
+}
+
+.app-dropdown-item.p-highlight {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.app-dropdown-item-group {
+  font-weight: 600;
+  color: var(--color-text-muted);
+  padding: 0.5rem 0.75rem;
+  background-color: var(--color-bg-secondary);
+}
+
+.app-dropdown-empty-message {
+  padding: 0.75rem;
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.app-dropdown-filter-input {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.app-dropdown-filter-input:focus {
+  border-color: var(--color-primary);
+}
+
+.app-dropdown-clear-icon {
+  color: var(--color-text-muted);
+  margin-left: 0.25rem;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.app-dropdown-clear-icon:hover {
+  color: var(--color-danger);
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.app-inputswitch-root {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  width: 3rem;
+  height: 1.5rem;
+  background-color: var(--color-border);
+  border-radius: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.app-inputswitch-root input[type="checkbox"] {
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  margin: 0;
+  cursor: pointer;
+}
+
+.app-inputswitch-slider {
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: var(--color-surface);
+  border-radius: 50%;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+.app-inputswitch-root input:checked + .app-inputswitch-slider {
+  transform: translateX(1.5rem);
+}
+
+.app-inputswitch-root input:checked ~ .app-inputswitch-slider {
+  background-color: var(--color-primary);
+}
+
+.app-inputswitch-root.loading {
+  cursor: not-allowed;
+  background-color: var(--color-border-disabled, #ccc);
+  opacity: 0.7;
+}
+
+.app-inputswitch-root.loading input[type="checkbox"] {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.app-inputswitch-root.loading .app-inputswitch-slider {
+  background-color: var(--color-border);
+  animation: pulse 1.2s infinite ease-in-out;
+}
+
+.app-dialog-root {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border-radius: 0.75rem;
+    box-shadow: var(--card-box-shadow);
+}
+
+.app-dialog-mask {
+    background-color: var(--background-hide);
+}
+
+.app-dialog-content {
+    padding: 1rem;
+}
+
+.app-dialog-header {
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+}
+
+.app-dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg-secondary);
+}
+
+.app-dialog-close-button {
+    background: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.app-dialog-close-button:hover {
+    background-color: rgba(244, 67, 54, 0.1);
+}
+
+.app-dialog-close-button:active {
+    background-color: rgba(244, 67, 54, 0.2);
+}
+
+.app-dialog-close-icon {
+    color: var(--color-text-muted);
+    font-size: 1.25rem;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.app-dialog-close-icon:hover {
+    color: var(--color-danger);
+}
+
+.app-dialog-close-icon:active {
+    color: var(--color-danger-active);
+}
+
+.app-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.app-badge.active {
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+  border-color: var(--color-primary);
+}
+
+
+.typography-heading {
+  font-size: 2rem;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.typography-heading-primary {
+  font-size: 2rem;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+  font-weight: 700;
+  text-align: center;
+  color: var(--color-primary);
+}
+
+.typography-heading-primary-not-center {
+  font-size: 2rem;
+  letter-spacing: -0.5px;
+  line-height: 1.3;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.typography-subheading {
+  font-size: 1.5rem;
+  letter-spacing: -0.25px;
+  line-height: 1.4;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.typography-body {
+  font-size: 1rem;
+  letter-spacing: 0;
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--color-text);
+}
+
+.typography-body-primary {
+  font-size: 1rem;
+  letter-spacing: 0;
+  line-height: 1.6;
+  font-weight: 400;
+  color: var(--color-bg);
+}
+
+.typography-caption {
+  font-size: 0.875rem;
+  letter-spacing: 0.25px;
+  line-height: 1.4;
+  font-weight: 400;
+  color: var(--color-text-muted);
+}
+
+.typography-accent {
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  line-height: 1.5;
+  font-weight: 500;
+  color: var(--color-danger);
+}
+
+.typography-card-title {
+  font-size: 1.25rem;
+  letter-spacing: 0;
+  line-height: 1.5;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.typography-card-id {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: var(--color-text-muted);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 0.6; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
